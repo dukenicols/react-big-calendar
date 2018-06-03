@@ -1,9 +1,9 @@
 {
-  "name": "react-big-calendar",
-  "version": "0.19.1",
-  "description": "Calendar! with events",
-  "author": "Jason Quense <monastic.panic@gmail.com>",
-  "repository": "intljusticemission/react-big-calendar",
+  "name": "react-big-calendar-redux",
+  "version": "0.20.0",
+  "description": "Calendar! with events - Redux",
+  "author": "Nicolas Duke <dukenicols@gmail.com>",
+  "repository": "dukenicols/react-big-calendar-redux",
   "license": "MIT",
   "main": "lib/index.js",
   "style": "lib/css/react-big-calendar.css",
@@ -12,6 +12,7 @@
     "scheduler",
     "react-component",
     "react",
+    "redux",
     "calendar",
     "events",
     "full calendar"
@@ -106,6 +107,8 @@
     "prop-types": "^15.5.8",
     "react-overlays": "^0.7.0",
     "react-prop-types": "^0.4.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "uncontrollable": "^4.0.0",
     "warning": "^2.0.0"
   }

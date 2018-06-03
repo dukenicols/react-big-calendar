@@ -1,21 +1,25 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import dates from './utils/dates'
 import localizer from './localizer'
 import { navigate } from './utils/constants'
 import TimeGrid from './TimeGrid'
 
+import { navigatePrevious, navigateNext, navigateDefault } from './actions'
+import { store } from '../examples/App'
+
 class Week extends React.Component {
   static propTypes = {
     date: PropTypes.instanceOf(Date).isRequired,
+    _date: PropTypes.instanceOf(Date).isRequired,
   }
 
   static defaultProps = TimeGrid.defaultProps
 
   render() {
-    let { date, ...props } = this.props
-    let range = Week.range(date, this.props)
-
+    let { _date, ...props } = this.props
+    let range = Week.range(_date, this.props)
     return <TimeGrid {...props} range={range} eventOffset={15} />
   }
 }
@@ -23,13 +27,13 @@ class Week extends React.Component {
 Week.navigate = (date, action) => {
   switch (action) {
     case navigate.PREVIOUS:
-      return dates.add(date, -1, 'week')
-
+      store.dispatch(navigatePrevious(date))
+      break
     case navigate.NEXT:
-      return dates.add(date, 1, 'week')
-
+      store.dispatch(navigateNext(date))
+      break
     default:
-      return date
+      return store.dispatch(navigateDefault(date))
   }
 }
 
@@ -50,4 +54,8 @@ Week.title = (date, { formats, culture }) => {
   )
 }
 
-export default Week
+const mapStateToProps = state => ({
+  _date: state.date,
+})
+
+export default connect(mapStateToProps)(Week)

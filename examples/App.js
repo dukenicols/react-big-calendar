@@ -4,6 +4,15 @@ import Intro from './Intro.md'
 import cn from 'classnames'
 import { render } from 'react-dom'
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducer from '../src/reducers/index'
+
+export const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
 import localizer from 'react-big-calendar/lib/localizers/globalize'
 import globalize from 'globalize'
 
@@ -149,4 +158,9 @@ class Example extends React.Component {
   }
 }
 
-render(<Example />, document.getElementById('app'))
+render(
+  <Provider store={store}>
+    <Example />
+  </Provider>,
+  document.getElementById('app')
+)

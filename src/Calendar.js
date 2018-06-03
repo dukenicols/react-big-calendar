@@ -10,6 +10,7 @@ import {
   views as componentViews,
 } from './utils/propTypes'
 import warning from 'warning'
+import { connect } from 'react-redux'
 
 import { notify } from './utils/helpers'
 import { navigate, views } from './utils/constants'
@@ -73,7 +74,7 @@ class Calendar extends React.Component {
      *
      * @controllable onNavigate
      */
-    date: PropTypes.instanceOf(Date),
+    _date: PropTypes.instanceOf(Date),
 
     /**
      * The current view of the calendar.
@@ -760,7 +761,7 @@ class Calendar extends React.Component {
       style,
       className,
       elementProps,
-      date: current,
+      _date: current,
       getNow,
       length,
       ...props
@@ -840,18 +841,18 @@ class Calendar extends React.Component {
   }
 
   handleNavigate = (action, newDate) => {
-    let { view, date, getNow, onNavigate, ...props } = this.props
+    let { view, _date, getNow, onNavigate, ...props } = this.props
     let ViewComponent = this.getView()
 
-    date = moveDate(ViewComponent, {
+    _date = moveDate(ViewComponent, {
       ...props,
       action,
-      date: newDate || date,
+      date: newDate || _date,
       today: getNow(),
     })
 
-    onNavigate(date, view, action)
-    this.handleRangeChange(date, ViewComponent)
+    onNavigate(_date, view, action)
+    this.handleRangeChange(_date, ViewComponent)
   }
 
   handleViewChange = view => {
@@ -860,7 +861,7 @@ class Calendar extends React.Component {
     }
 
     let views = this.getViews()
-    this.handleRangeChange(this.props.date, views[view])
+    this.handleRangeChange(this.props._date, views[view])
   }
 
   handleSelectEvent = (...args) => {
@@ -887,7 +888,11 @@ class Calendar extends React.Component {
   }
 }
 
-export default uncontrollable(Calendar, {
+const mapStateToProps = state => ({
+  _date: state.date,
+})
+
+export default uncontrollable(connect(mapStateToProps)(Calendar), {
   view: 'onView',
   date: 'onNavigate',
   selected: 'onSelectEvent',

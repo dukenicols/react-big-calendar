@@ -1,6 +1,6 @@
 export let navigate = {
-  PREVIOUS: 'PREV',
-  NEXT: 'NEXT',
+  PREVIOUS: '@@rbc/PREV',
+  NEXT: '@@rbc/NEXT',
   TODAY: 'TODAY',
   DATE: 'DATE',
 }
